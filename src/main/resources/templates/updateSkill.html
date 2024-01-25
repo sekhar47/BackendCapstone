@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Skill</title>
+</head>
+<body>
+    <a th:href="@{/updateSkillPage(skillname=${skill.skillname})}">Update Skill</a>
+
+    <!-- Add a div to display messages -->
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+
+<form action="#" method="post" th:action="@{/updateSkill}">
+        <label for="domain">Select Domain:</label>
+        <select id="domain" name="domain">
+            <option th:each="domain : ${domains}" th:value="${domain}" th:text="${domain}"></option>
+        </select>
+        <br>
+
+        <label for="subdomain">Select Subdomain:</label>
+        <select id="subdomain" name="subdomain">
+            <option th:each="subdomain : ${subdomains}" th:value="${subdomain}" th:text="${subdomain}"></option>
+        </select>
+        <br>
+
+        <label for="oldSkillName">Select Skill to Update:</label>
+        <select id="oldSkillName" name="oldSkillName"
+                th:onchange="updateSkillPage(this.value)">
+            <option th:each="skill : ${skills}" th:value="${skill.skillname}" th:text="${skill.skillname}"></option>
+        </select>
+        <br>
+
+        <label for="newSkillName">New Skill Name:</label>
+        <input type="text" id="newSkillName" name="newSkillName" required>
+        <br>
+
+        <input type="submit" value="Update Skill">
+    </form>
+
+<!-- Add a JavaScript function to dynamically update the URL -->
+<script th:inline="javascript">
+    function updateSkillPage(skillName) {
+        console.log('Selected Skill Name:', skillName);
+        var updateSkillPageUrl = /*[[ @{/updateSkillPage(skillname=${skillName})} ]]*/ '';
+        window.location.href = updateSkillPageUrl + skillName;
+    }
+</script>
+    <a th:href="@{/viewSkillsPage}">Back to View Skills</a>
+</body>
+</html>
